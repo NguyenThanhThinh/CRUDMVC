@@ -1,0 +1,45 @@
+﻿@model IEnumerable<CRUDMVC.Models.Entities.Category>
+@{
+    ViewBag.Title = "Index";
+    var model = Model;
+}
+
+<br />
+<div class="row">
+    <a href='@Url.Action("InsertUpdate","Category")' class="btn btn-primary waves-effect waves-light">Thêm Mới</a>
+</div>
+<div class="row">
+    <table class="table table-hover" id="table-category">
+        <thead>
+            <tr>
+                <th>Mã Loại</th>
+                <th>Tên Loại</th>
+                <th>Mô tả</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in model)
+            {
+                <tr>
+                    <td>@item.ID</td>
+                    <td>@item.Name</td>
+                    <td>@item.Description</td>
+                    <td>
+                        <div class="pull-right">
+                            <a href='@Url.Action("InsertUpdate", "Category", new { id = item.ID})' class="btn btn-default"></a>
+                            <button data-id="@item.ID"
+                                    data-name="@item.Name"
+                                    data-url='@Url.Action("Delete", "Category", new { id = item.ID })'
+                                    class="btn btn-danger  btn-delete">
+                               
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
