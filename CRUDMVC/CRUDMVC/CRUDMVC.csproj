@@ -155,6 +155,10 @@
     <Compile Include="Migrations\201705230608308_add.Designer.cs">
       <DependentUpon>201705230608308_add.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705230842547_updateCategory.cs" />
+    <Compile Include="Migrations\201705230842547_updateCategory.Designer.cs">
+      <DependentUpon>201705230842547_updateCategory.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Entities\Category.cs" />
     <Compile Include="Models\PetCrudMvcDbContext.cs" />
@@ -169,6 +173,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\app\app.js" />
+    <Content Include="Scripts\app\category.js" />
     <Content Include="Scripts\bootbox.js" />
     <Content Include="Scripts\bootbox.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -226,6 +232,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201705230608308_add.resx">
       <DependentUpon>201705230608308_add.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705230842547_updateCategory.resx">
+      <DependentUpon>201705230842547_updateCategory.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -3,11 +3,21 @@
     ViewBag.Title = "Index";
     var model = Model;
 }
-
 <br />
 <div class="row">
-    <a href='@Url.Action("InsertUpdate","Category")' class="btn btn-primary waves-effect waves-light">Thêm Mới</a>
+    <a href='@Url.Action("InsertUpdate","Category")' class="btn btn-primary">Add</a>
 </div>
+<br />
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        @TempData["Message"]
+    </div>
+
+}
 <div class="row">
     <table class="table table-hover" id="table-category">
         <thead>
@@ -27,13 +37,14 @@
                     <td>@item.Description</td>
                     <td>
                         <div class="pull-right">
-                            <a href='@Url.Action("InsertUpdate", "Category", new { id = item.ID})' class="btn btn-default"></a>
-                            <button data-id="@item.ID"
-                                    data-name="@item.Name"
-                                    data-url='@Url.Action("Delete", "Category", new { id = item.ID })'
-                                    class="btn btn-danger  btn-delete">
-                               
-                            </button>
+                            <a href="@Url.Action("InsertUpdate", "Category", new { id = item.ID})" class="btn btn-warning btn-sm margin-right">
+                                <span class="glyphicon glyphicon-edit"></span><span class="hidden-xs"> Edit</span>
+                            </a>
+                            <a data-id="@item.ID"
+                               data-name="@item.Name"
+                               data-url="@Url.Action("Delete", "Category", new { id = item.ID })" class="btn btn-danger btn-sm btn-delete">
+                                <span class="glyphicon glyphicon-trash "></span><span class="hidden-xs"> Delete</span>
+                            </a>
                         </div>
                     </td>
                 </tr>

@@ -1,5 +1,5 @@
 ﻿@model CRUDMVC.Models.Entities.Category
-@if (Model == null || Model.Name == null)
+@if (Model == null || Model.ID == 0)
 {
     ViewBag.Title = "Thêm mới";
 }
@@ -10,7 +10,7 @@ else
 <div class="panel">
     @using (Html.BeginForm("InsertUpdate", "Category", FormMethod.Post, new { @class = "", id = "form-category" }))
     {
-        @Html.ValidationSummary("", new { @class = "red list-unstyled" })
+        @Html.ValidationSummary("", new { @class = "list-unstyled" })
 
         if (Model != null && Model.ID != 0)
         {
@@ -19,13 +19,13 @@ else
 
         <div class="form-group multi-control">
             <label>Tên loại lớp</label>
-            @Html.TextBoxFor(s => s.Name, new { @class = "form-control", placeholder = "Tên loại", autocomplete = "on" })
+            @Html.TextBoxFor(s => s.Name, new { @class = "form-control", placeholder = "Tên loại"})
 
         </div>
 
         <div class="form-group multi-control">
             <label>Mô tả</label>
-            @Html.TextAreaFor(s => s.Description, new { @class = "form-control", placeholder = "Mô tả", autocomplete = "on" })
+            @Html.TextAreaFor(s => s.Description, new { @class = "form-control", placeholder = "Mô tả"})
 
         </div>
 
@@ -38,6 +38,6 @@ else
             <button type="submit" class="btn btn-primary">Cập nhật</button>
         }
 
-        <a href='@Url.Action("Index","Catgory")' class="btn btn-default">Quay về</a>
+        <a href='@Url.Action("Index","Category")' class="btn btn-default">Quay về</a>
     }
 </div>

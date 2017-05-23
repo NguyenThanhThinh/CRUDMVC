@@ -1,13 +1,14 @@
 ﻿using CRUDMVC.Models;
 using CRUDMVC.Models.Entities;
-
 using System;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.Mvc;
 
 namespace CRUDMVC.Controllers
 {
+    [RoutePrefix("Category")]
     public class CategoryController : Controller
     {
         private readonly PetCrudMvcDbContext db = null;
@@ -15,12 +16,14 @@ namespace CRUDMVC.Controllers
         {
             db = new PetCrudMvcDbContext();
         }
+        [Route("Index")]
         public ActionResult Index()
         {
             var getAll = db.Categorys.ToList();
             return View(getAll);
         }
         [HttpGet]
+        [Route("InsertUpdate/{id?}")]
         public ActionResult InsertUpdate(int? id)
         {
             var getID = db.Categorys.SingleOrDefault(n => n.ID == id);
@@ -31,8 +34,10 @@ namespace CRUDMVC.Controllers
             return View("InsertUpdateCategory");
         }
         [HttpPost]
+        [Route("InsertUpdate")]
         public ActionResult InsertUpdate(Category vm)
         {
+
             if (ModelState.IsValid)
             {
                 try
@@ -50,20 +55,28 @@ namespace CRUDMVC.Controllers
                         TempData["Message"] = "Cập nhật thành công";
                     }
                 }
-                catch (Exception)
+                catch (DbEntityValidationException ex)
                 {
 
-                    throw;
+                    foreach (var entityValidationErrors in ex.EntityValidationErrors)
+                    {
+                        foreach (var validationError in entityValidationErrors.ValidationErrors)
+                        {
+                            Response.Write("Property: " + validationError.PropertyName + " Error: " + validationError.ErrorMessage);
+                        }
+                    }
                 }
             }
             else
             {
-                ModelState.AddModelError("", "Không Thành công");
+                ModelState.AddModelError("", "error");
+                return View("InsertUpdateCategory", vm);
             }
 
             return RedirectToAction("Index");
         }
         [HttpPost]
+        [Route("Delete/{id?}")]
         public ActionResult Delete(int? id)
         {
             var success = DeleteAsync(id);
@@ -71,19 +84,20 @@ namespace CRUDMVC.Controllers
             {
                 var all = db.Categorys.ToList();
                 if (all != null)
-                    db.SaveChanges();
+
                     return Json(new { success = true }, JsonRequestBehavior.AllowGet);
             }
             return Json(new { success = success }, JsonRequestBehavior.AllowGet);
         }
 
         private bool DeleteAsync(object id)
-        {     
+        {
             try
             {
                 var existing = db.Categorys.Find(id);
                 if (existing != null)
                     db.Categorys.Remove(existing);
+                db.SaveChanges();
                 return true;
             }
             catch (Exception)
